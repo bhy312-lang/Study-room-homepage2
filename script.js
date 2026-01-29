@@ -543,8 +543,27 @@ function renderSeats() {
     seats.forEach((seat) => {
         const seatDiv = document.createElement('div');
         seatDiv.id = 'seat-' + seat.id;
-        seatDiv.className = `absolute w-24 h-28 rounded-2xl flex flex-col items-center justify-center text-white font-bold text-sm shadow-lg cursor-move ${seat.occupied ? 'bg-gradient-to-br from-red-400 to-red-500' : 'bg-gradient-to-br from-emerald-400 to-emerald-500'
-            }`;
+
+        // 좌석이 설정되었는지 확인 (이름 또는 알람 시간이 있는 경우)
+        const isConfigured = seat.name || seat.alarmTime;
+
+        let seatColorClass;
+        let textColorClass;
+        if (!isConfigured) {
+            // 설정되지 않은 좌석: 파스텔 회색 (비활성화 스타일)
+            seatColorClass = 'bg-gradient-to-br from-gray-200 to-gray-300';
+            textColorClass = 'text-gray-400';
+        } else if (seat.occupied) {
+            // 사용 중인 좌석: 빨간색
+            seatColorClass = 'bg-gradient-to-br from-red-400 to-red-500';
+            textColorClass = 'text-white';
+        } else {
+            // 설정된 비어있는 좌석: 초록색
+            seatColorClass = 'bg-gradient-to-br from-emerald-400 to-emerald-500';
+            textColorClass = 'text-white';
+        }
+
+        seatDiv.className = `absolute w-24 h-28 rounded-2xl flex flex-col items-center justify-center font-bold text-sm shadow-lg cursor-move ${seatColorClass} ${textColorClass}`;
 
         seatDiv.style.left = seat.x + 'px';
         seatDiv.style.top = seat.y + 'px';
@@ -552,9 +571,12 @@ function renderSeats() {
         seatDiv.style.willChange = 'transform';
         seatDiv.style.transition = 'none';
 
-        seatDiv.innerHTML = `
+        // 설정되지 않은 좌석은 좌석 번호만 표시
+        seatDiv.innerHTML = isConfigured ? `
                     <div class="text-lg">좌석 ${seat.number}</div>
                     ${seat.name ? `<div class="text-xs mt-1">${seat.name}</div>` : ''}
+                ` : `
+                    <div class="text-lg">좌석 ${seat.number}</div>
                 `;
 
         // 더블클릭: 편집
