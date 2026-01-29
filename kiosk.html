@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>키오스크 - 꿈터공부방</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #fce7f3 0%, #e9d5ff 25%, #dbeafe 50%, #fef3c7 75%, #fef2f2 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-6">
+    <div class="bg-gradient-to-br from-white to-pink-50/30 rounded-[40px] p-12 max-w-lg w-full shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-white/50">
+        <div class="text-center mb-10">
+            <div class="w-24 h-24 bg-gradient-to-br from-pink-200 to-purple-200 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-pink-200/50">
+                <span class="material-symbols-outlined text-pink-600 text-6xl">touch_app</span>
+            </div>
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent mb-3">키오스크</h1>
+            <p class="text-gray-400 text-lg">학번을 입력하고 원하시는 기능을 선택하세요</p>
+        </div>
+
+        <!-- 학번 입력 표시 -->
+        <div class="mb-10">
+            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 text-center shadow-inner border-2 border-purple-100">
+                <div class="flex justify-center gap-4 mb-3">
+                    <div id="kiosk-digit-1" class="w-16 h-18 bg-white rounded-2xl shadow-lg shadow-purple-200/50 border-2 border-purple-200 flex items-center justify-center text-3xl font-bold text-purple-500 min-h-[72px]"></div>
+                    <div id="kiosk-digit-2" class="w-16 h-18 bg-white rounded-2xl shadow-lg shadow-purple-200/50 border-2 border-purple-200 flex items-center justify-center text-3xl font-bold text-purple-500 min-h-[72px]"></div>
+                    <div id="kiosk-digit-3" class="w-16 h-18 bg-white rounded-2xl shadow-lg shadow-purple-200/50 border-2 border-purple-200 flex items-center justify-center text-3xl font-bold text-purple-500 min-h-[72px]"></div>
+                    <div id="kiosk-digit-4" class="w-16 h-18 bg-white rounded-2xl shadow-lg shadow-purple-200/50 border-2 border-purple-200 flex items-center justify-center text-3xl font-bold text-purple-500 min-h-[72px]"></div>
+                </div>
+                <span class="text-base text-gray-400">학번 (4자리)</span>
+            </div>
+        </div>
+
+        <!-- 숫자 키패드 -->
+        <div class="grid grid-cols-3 gap-5 mb-10">
+            <button onclick="kioskPressKey('1')" class="kiosk-key bg-gradient-to-br from-pink-100 to-pink-200 hover:from-pink-200 hover:to-pink-300 text-3xl font-bold text-pink-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-pink-200/50 hover:shadow-xl hover:shadow-pink-300/50 active:scale-95 active:shadow-md">1</button>
+            <button onclick="kioskPressKey('2')" class="kiosk-key bg-gradient-to-br from-purple-100 to-purple-200 hover:from-purple-200 hover:to-purple-300 text-3xl font-bold text-purple-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-purple-200/50 hover:shadow-xl hover:shadow-purple-300/50 active:scale-95 active:shadow-md">2</button>
+            <button onclick="kioskPressKey('3')" class="kiosk-key bg-gradient-to-br from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 text-3xl font-bold text-blue-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-blue-200/50 hover:shadow-xl hover:shadow-blue-300/50 active:scale-95 active:shadow-md">3</button>
+            <button onclick="kioskPressKey('4')" class="kiosk-key bg-gradient-to-br from-green-100 to-green-200 hover:from-green-200 hover:to-green-300 text-3xl font-bold text-green-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-green-200/50 hover:shadow-xl hover:shadow-green-300/50 active:scale-95 active:shadow-md">4</button>
+            <button onclick="kioskPressKey('5')" class="kiosk-key bg-gradient-to-br from-yellow-100 to-yellow-200 hover:from-yellow-200 hover:to-yellow-300 text-3xl font-bold text-yellow-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-yellow-200/50 hover:shadow-xl hover:shadow-yellow-300/50 active:scale-95 active:shadow-md">5</button>
+            <button onclick="kioskPressKey('6')" class="kiosk-key bg-gradient-to-br from-orange-100 to-orange-200 hover:from-orange-200 hover:to-orange-300 text-3xl font-bold text-orange-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-orange-200/50 hover:shadow-xl hover:shadow-orange-300/50 active:scale-95 active:shadow-md">6</button>
+            <button onclick="kioskPressKey('7')" class="kiosk-key bg-gradient-to-br from-teal-100 to-teal-200 hover:from-teal-200 hover:to-teal-300 text-3xl font-bold text-teal-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-teal-200/50 hover:shadow-xl hover:shadow-teal-300/50 active:scale-95 active:shadow-md">7</button>
+            <button onclick="kioskPressKey('8')" class="kiosk-key bg-gradient-to-br from-indigo-100 to-indigo-200 hover:from-indigo-200 hover:to-indigo-300 text-3xl font-bold text-indigo-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/50 active:scale-95 active:shadow-md">8</button>
+            <button onclick="kioskPressKey('9')" class="kiosk-key bg-gradient-to-br from-rose-100 to-rose-200 hover:from-rose-200 hover:to-rose-300 text-3xl font-bold text-rose-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-rose-200/50 hover:shadow-xl hover:shadow-rose-300/50 active:scale-95 active:shadow-md">9</button>
+            <button onclick="kioskClearInput()" class="bg-gradient-to-br from-red-100 to-red-200 hover:from-red-200 hover:to-red-300 text-xl font-bold text-red-500 rounded-2xl py-5 transition-all duration-150 shadow-lg shadow-red-200/50 hover:shadow-xl hover:shadow-red-300/50 active:scale-95">지우기</button>
+            <button onclick="kioskPressKey('0')" class="kiosk-key bg-gradient-to-br from-cyan-100 to-cyan-200 hover:from-cyan-200 hover:to-cyan-300 text-3xl font-bold text-cyan-600 rounded-2xl py-6 transition-all duration-150 shadow-lg shadow-cyan-200/50 hover:shadow-xl hover:shadow-cyan-300/50 active:scale-95 active:shadow-md">0</button>
+            <button onclick="kioskBackspace()" class="bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-2xl font-bold text-gray-500 rounded-2xl py-5 transition-all duration-150 shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 active:scale-95">←</button>
+        </div>
+
+        <!-- 등원/하원 버튼 -->
+        <div class="flex gap-5">
+            <button onclick="kioskCheckIn()"
+                class="flex-1 px-8 py-6 bg-gradient-to-br from-emerald-300 to-emerald-400 text-white font-bold rounded-2xl shadow-lg shadow-emerald-200/50 hover:shadow-xl hover:shadow-emerald-300/50 transition-all duration-150 text-xl active:scale-95">
+                <span class="material-symbols-outlined inline align-middle mr-2 text-2xl">login</span>
+                등원
+            </button>
+            <button onclick="kioskCheckOut()"
+                class="flex-1 px-8 py-6 bg-gradient-to-br from-amber-300 to-orange-400 text-white font-bold rounded-2xl shadow-lg shadow-orange-200/50 hover:shadow-xl hover:shadow-orange-300/50 transition-all duration-150 text-xl active:scale-95">
+                <span class="material-symbols-outlined inline align-middle mr-2 text-2xl">logout</span>
+                하원
+            </button>
+        </div>
+
+        <!-- 메인으로 돌아가기 -->
+        <div class="mt-8 text-center">
+            <a href="index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white/60 text-gray-400 font-semibold rounded-xl hover:bg-white/80 transition-all duration-150">
+                <span class="material-symbols-outlined">home</span>
+                메인으로 돌아가기
+            </a>
+        </div>
+    </div>
+
+    <!-- 알림 모달 -->
+    <div id="alert-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-3xl p-10 max-w-sm w-full mx-4 shadow-2xl text-center">
+            <div id="alert-icon" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="material-symbols-outlined text-5xl"></span>
+            </div>
+            <h3 id="alert-title" class="text-2xl font-bold text-gray-800 mb-3"></h3>
+            <p id="alert-message" class="text-gray-600 mb-8"></p>
+            <button onclick="closeAlertModal()" class="w-full px-6 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition">확인</button>
+        </div>
+    </div>
+
+    <script>
+        // 초기 학생 데이터 (index.html과 동기화 필요 시 localStorage 사용)
+        let students = [
+            { name: "김민준", status: "present", checkInTime: "14:20", checkOutTime: "-", id: "0001" },
+            { name: "이서윤", status: "present", checkInTime: "14:45", checkOutTime: "-", id: "0002" },
+            { name: "박하준", status: "absent", checkInTime: "-", checkOutTime: "16:10", id: "0003" },
+            { name: "최지우", status: "present", checkInTime: "15:05", checkOutTime: "-", id: "0004" },
+            { name: "정우진", status: "absent", checkInTime: "-", checkOutTime: "15:50", id: "0005" },
+            { name: "유나", status: "present", checkInTime: "15:30", checkOutTime: "-", id: "0006" }
+        ];
+
+        // 로컬 스토리지에서 학생 목록 불러오기
+        function loadStudents() {
+            try {
+                const storedStudents = localStorage.getItem('students');
+                if (storedStudents) {
+                    students = JSON.parse(storedStudents);
+                }
+            } catch (e) {
+                console.error('Error loading students:', e);
+            }
+        }
+
+        // 로컬 스토리지에 학생 목록 저장하기
+        function saveStudents() {
+            localStorage.setItem('students', JSON.stringify(students));
+        }
+
+        let kioskInput = '';
+
+        function kioskPressKey(key) {
+            if (kioskInput.length < 4) {
+                kioskInput += key;
+                updateKioskDisplay();
+            }
+        }
+
+        function kioskBackspace() {
+            kioskInput = kioskInput.slice(0, -1);
+            updateKioskDisplay();
+        }
+
+        function kioskClearInput() {
+            kioskInput = '';
+            updateKioskDisplay();
+        }
+
+        function updateKioskDisplay() {
+            for (let i = 1; i <= 4; i++) {
+                const digitEl = document.getElementById(`kiosk-digit-${i}`);
+                if (digitEl) {
+                    digitEl.textContent = kioskInput[i - 1] || '';
+                }
+            }
+        }
+
+        function showAlert(type, title, message) {
+            const modal = document.getElementById('alert-modal');
+            const icon = document.getElementById('alert-icon');
+            const titleEl = document.getElementById('alert-title');
+            const messageEl = document.getElementById('alert-message');
+
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+
+            // 아이콘 스타일 설정
+            if (type === 'success') {
+                icon.className = 'w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6';
+                icon.innerHTML = '<span class="material-symbols-outlined text-green-600 text-5xl">check_circle</span>';
+            } else if (type === 'error') {
+                icon.className = 'w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6';
+                icon.innerHTML = '<span class="material-symbols-outlined text-red-600 text-5xl">error</span>';
+            } else if (type === 'warning') {
+                icon.className = 'w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6';
+                icon.innerHTML = '<span class="material-symbols-outlined text-yellow-600 text-5xl">warning</span>';
+            } else {
+                icon.className = 'w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6';
+                icon.innerHTML = '<span class="material-symbols-outlined text-blue-600 text-5xl">info</span>';
+            }
+
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
+        }
+
+        function closeAlertModal() {
+            const modal = document.getElementById('alert-modal');
+            modal.style.display = 'none';
+            modal.classList.add('hidden');
+        }
+
+        function kioskCheckIn() {
+            if (kioskInput.length !== 4) {
+                showAlert('warning', '알림', '학번 4자리를 모두 입력해주세요.');
+                return;
+            }
+
+            const studentId = kioskInput.trim();
+            const student = students.find(s => s.id === studentId);
+
+            if (student) {
+                if (student.status === 'present') {
+                    showAlert('info', '알림', `${student.name}님은 이미 등원하셨습니다.`);
+                    kioskClearInput();
+                } else {
+                    student.status = 'present';
+                    student.checkInTime = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+                    student.checkOutTime = '-';
+                    saveStudents();
+                    showAlert('success', '등원 완료', `${student.name}님, 등원이 완료되었습니다!`);
+                    kioskClearInput();
+                }
+            } else {
+                showAlert('error', '오류', '등록되지 않은 학번입니다.');
+                kioskClearInput();
+            }
+        }
+
+        function kioskCheckOut() {
+            if (kioskInput.length !== 4) {
+                showAlert('warning', '알림', '학번 4자리를 모두 입력해주세요.');
+                return;
+            }
+
+            const studentId = kioskInput.trim();
+            const student = students.find(s => s.id === studentId);
+
+            if (student) {
+                if (student.status === 'absent') {
+                    showAlert('info', '알림', `${student.name}님은 등원되지 않았습니다.`);
+                    kioskClearInput();
+                } else {
+                    student.status = 'absent';
+                    student.checkOutTime = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+                    saveStudents();
+                    showAlert('success', '하원 완료', `${student.name}님, 하원 완료되었습니다! 안녕히 가세요!`);
+                    kioskClearInput();
+                }
+            } else {
+                showAlert('error', '오류', '등록되지 않은 학번입니다.');
+                kioskClearInput();
+            }
+        }
+
+        // 초기화
+        loadStudents();
+        updateKioskDisplay();
+
+        // ESC 키로 알림 모달 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAlertModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -2363,6 +2363,10 @@
                         class="px-6 py-2.5 bg-gradient-to-r from-red-400 to-red-500 text-white font-semibold rounded-full hover:shadow-lg transition transform hover:scale-105">
                         <span class="material-symbols-outlined inline mr-1 text-sm">delete_sweep</span>전부 삭제
                     </button>
+                    <a href="kiosk.html" target="_blank"
+                        class="px-6 py-2.5 bg-gradient-to-r from-indigo-400 to-indigo-500 text-white font-semibold rounded-full hover:shadow-lg transition transform hover:scale-105 inline-flex items-center">
+                        <span class="material-symbols-outlined inline mr-1 text-sm">touch_app</span>키오스크
+                    </a>
                 </div>
 
                 <div class="bg-gradient-to-br from-teal-50 to-blue-50 rounded-2xl p-8 border-2 border-dashed border-teal-300 min-h-[1050px] relative seat-map-container"
@@ -2605,6 +2609,33 @@
         let currentSeatId = null;
         const SEAT_WIDTH = 128; // w-32 = 128px
         const SEAT_HEIGHT = 144; // h-36 = 144px
+
+        // ========== 학생 출결 관리 ==========
+        let students = [
+            { name: "김민준", status: "present", checkInTime: "14:20", checkOutTime: "-", id: "0001" },
+            { name: "이서윤", status: "present", checkInTime: "14:45", checkOutTime: "-", id: "0002" },
+            { name: "박하준", status: "absent", checkInTime: "-", checkOutTime: "16:10", id: "0003" },
+            { name: "최지우", status: "present", checkInTime: "15:05", checkOutTime: "-", id: "0004" },
+            { name: "정우진", status: "absent", checkInTime: "-", checkOutTime: "15:50", id: "0005" },
+            { name: "유나", status: "present", checkInTime: "15:30", checkOutTime: "-", id: "0006" }
+        ];
+
+        // 로컬 스토리지에서 학생 목록 불러오기
+        function loadStudents() {
+            try {
+                const storedStudents = localStorage.getItem('students');
+                if (storedStudents) {
+                    students = JSON.parse(storedStudents);
+                }
+            } catch (e) {
+                console.error('Error parsing saved students:', e);
+            }
+        }
+
+        // 로컬 스토리지에 학생 목록 저장하기
+        function saveStudents() {
+            localStorage.setItem('students', JSON.stringify(students));
+        }
 
         // 로컬 스토리지에서 좌석 목록 불러오기
         function loadSeats() {
@@ -3484,20 +3515,26 @@
             const list = document.getElementById('attendanceList');
             if (!list) return;
 
-            list.innerHTML = students.map(s => `
+            list.innerHTML = students.map(s => {
+                const statusText = s.status === 'present' ? '등원중' : '하원';
+                const statusClass = s.status === 'present' ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-200 text-gray-500';
+                const timeText = s.status === 'present' ? `등원: ${s.checkInTime}` : `하원: ${s.checkOutTime}`;
+
+                return `
                 <div class="bg-gray-50 p-6 rounded-3xl flex justify-between items-center">
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <span class="font-bold text-lg">${s.name}</span>
-                            <span class="text-[10px] px-2 py-0.5 ${s.status === '등원중' ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-200 text-gray-500'} rounded-full font-bold">학생</span>
+                            <span class="text-[10px] px-2 py-0.5 ${statusClass} rounded-full font-bold">학생</span>
                         </div>
-                        <p class="text-xs text-gray-400">${s.status} 시각: ${s.time}</p>
+                        <p class="text-xs text-gray-400">${timeText}</p>
                     </div>
                     <button class="bg-white p-2 rounded-2xl shadow-sm text-gray-400 hover:text-[#58d3d3]">
                         <span class="material-symbols-outlined">more_vert</span>
                     </button>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // Tab switching logic
@@ -3528,16 +3565,6 @@
                 document.getElementById('menuIcon').textContent = 'menu';
             }
         });
-
-        // Attendance Data Mockup
-        const students = [
-            { name: "김민준", status: "등원중", time: "14:20", id: 1 },
-            { name: "이서윤", status: "등원중", time: "14:45", id: 2 },
-            { name: "박하준", status: "하원", time: "16:10", id: 3 },
-            { name: "최지우", status: "등원중", time: "15:05", id: 4 },
-            { name: "정우진", status: "하원", time: "15:50", id: 5 },
-            { name: "유나", status: "등원중", time: "15:30", id: 6 }
-        ];
 
         // Map Implementation
         async function initMap() {
@@ -3667,6 +3694,7 @@
                 }
             });
 
+            loadStudents();
             renderAttendance();
             loadSeats();
             renderSeats();
